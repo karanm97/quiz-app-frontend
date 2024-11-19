@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import Login from "./Login";
 
 const App = () => {
-  return (
-    <>
-      <h1 className="text-lg p-4 m-4 text-red-600">Hello World</h1>
-    </>
-  );
+	return (
+		<>
+			<Login />
+		</>
+	);
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
