@@ -4,12 +4,14 @@ import Login from "./Login";
 import Header from "./components/Header";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
+import TopicSelection from "./components/TopicSelection";
 
 const App = () => {
 	return (
 		<>
 			<Provider store={store}>
 				<Header />
+				<TopicSelection />
 				{/* <Login /> */}
 			</Provider>
 		</>
