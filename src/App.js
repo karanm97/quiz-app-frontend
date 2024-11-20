@@ -6,13 +6,15 @@ import { Provider } from "react-redux";
 import { store } from "./utils/store";
 import TopicSelection from "./components/TopicSelection";
 import QuizPage from "./components/QuizPage";
+import Leaderboard from "./components/Leaderboard";
 
 const App = () => {
 	return (
 		<>
 			<Provider store={store}>
 				<Header />
-				<QuizPage />
+				{/* <Leaderboard /> */}
+				{/* <QuizPage /> */}
 				{/* <TopicSelection /> */}
 				{/* <Login /> */}
 			</Provider>
