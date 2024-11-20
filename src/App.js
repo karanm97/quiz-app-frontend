@@ -5,13 +5,15 @@ import Header from "./components/Header";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
 import TopicSelection from "./components/TopicSelection";
+import QuizPage from "./components/QuizPage";
 
 const App = () => {
 	return (
 		<>
 			<Provider store={store}>
 				<Header />
-				<TopicSelection />
+				<QuizPage />
+				{/* <TopicSelection /> */}
 				{/* <Login /> */}
 			</Provider>
 		</>

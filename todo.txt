@@ -1,6 +1,6 @@
-- Login page
-- Signup page
-- Topic selection page
+- Login page (done)
+- Signup page (done)
+- Topic selection page (done)
 - quiz page
 - final page showing scores
 - Leaderboard
