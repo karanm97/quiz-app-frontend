@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { questions } from "../constants/questions";
+import { redirect, useNavigate } from "react-router";
 
 const QuizPage = () => {
 	const [quizQuestions, setQuizQuestions] = useState();
 	const [answers, setAnswers] = useState();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setQuizQuestions(questions);
@@ -19,7 +21,9 @@ const QuizPage = () => {
 		console.log(selectedOption);
 	};
 
-	const handleSubmit = () => {};
+	const handleSubmit = () => {
+		navigate("/quiz/results");
+	};
 
 	if (!quizQuestions) return null;
 
@@ -64,7 +68,10 @@ const QuizPage = () => {
 				);
 			})}
 			<div className="mt-8 text-center">
-				<button className="px-6 py-3 bg-green-500 text-white font-semibold rounded-md transition-all duration-200 hover:bg-green-600">
+				<button
+					onClick={handleSubmit}
+					className="px-6 py-3 bg-green-500 text-white font-semibold rounded-md transition-all duration-200 hover:bg-green-600"
+				>
 					Submit Quiz
 				</button>
 			</div>

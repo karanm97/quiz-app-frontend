@@ -1,13 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserEmail } from "../utils/slices/userSlice";
+import { useNavigate } from "react-router";
 
 const Header = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const userEmail = useSelector((store) => store.user.userEmail);
 
 	const handleLogoutClick = () => {
 		dispatch(removeUserEmail());
+		navigate("/");
 	};
 
 	return (

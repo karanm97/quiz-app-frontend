@@ -10,7 +10,7 @@ const TAGS = [
 	{ id: 6, value: "Pop Culture" },
 ];
 
-const TopicSelection = () => {
+const TopicSelection = ({ startQuiz }) => {
 	const [selectedTags, setSelectedTags] = useState([]);
 
 	const handleTagClick = (e) => {
@@ -26,6 +26,7 @@ const TopicSelection = () => {
 
 	const handleStartClick = () => {
 		console.log(selectedTags);
+		startQuiz();
 	};
 
 	return (

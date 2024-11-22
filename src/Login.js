@@ -1,21 +1,52 @@
 import React, { useState } from "react";
+import { loginUser, registerUser } from "./api/authentication";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addUserEmail } from "./utils/slices/userSlice";
 
 const Login = () => {
 	const [isLogin, setIsLogin] = useState(true);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [repeatPassowrd, setRepeatPassword] = useState("");
+	const [repeatPassword, setRepeatPassword] = useState("");
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleSignUpClick = () => {
 		setIsLogin((isLogin) => !isLogin);
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log("Email:", email);
-		console.log("Password:", password);
-		!isLogin && console.log("Repeat Password:", repeatPassowrd);
-		// You can add form validation or API calls here
+
+		// User Registration
+		if (!isLogin && password === repeatPassword) {
+			const responseData = await registerUser(email, password);
+			if (responseData.status !== "ok") {
+				setError(responseData.status);
+			} else {
+				setError("");
+				navigate("/quiz");
+				dispatch(addUserEmail(email));
+			}
+		}
+		if (!isLogin && password !== repeatPassword) {
+			setError("Passwords do not match.");
+		}
+
+		// User Login
+		if (isLogin) {
+			const responseData = await loginUser(email, password);
+			console.log(responseData);
+			if (responseData.status === "ok" && responseData.user) {
+				console.log("user is present");
+				navigate("/quiz");
+				dispatch(addUserEmail(email));
+			} else {
+				setError("Email ID not found.");
+			}
+		}
 	};
 
 	return (
@@ -76,7 +107,7 @@ const Login = () => {
 								type="password"
 								id="password"
 								name="password"
-								value={repeatPassowrd}
+								value={repeatPassword}
 								onChange={(e) => setRepeatPassword(e.target.value)}
 								className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
 								required
@@ -85,12 +116,18 @@ const Login = () => {
 						</div>
 					)}
 
+					{/* Error Message */}
+					{error && (
+						<div className="flex justify-center items-center">
+							<div className="text-red-600 p-2">{error}</div>
+						</div>
+					)}
 					{/* Submit Button */}
 					<button
 						type="submit"
 						className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200"
 					>
-						Log In
+						{isLogin ? "Log In" : "Sign Up"}
 					</button>
 				</form>
 
