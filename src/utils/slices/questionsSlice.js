@@ -2,12 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const questionSlice = createSlice({
 	name: "questions",
-	initialState: {
-		questions: null,
-	},
+	initialState: [],
 	reducers: {
 		addQuestionsToState: (state, action) => {
-			state.questions = action.payload;
+			return action.payload;
 		},
 	},
 });

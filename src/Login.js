@@ -38,9 +38,7 @@ const Login = () => {
 		// User Login
 		if (isLogin) {
 			const responseData = await loginUser(email, password);
-			console.log(responseData);
 			if (responseData.status === "ok" && responseData.user) {
-				console.log("user is present");
 				navigate("/quiz");
 				dispatch(addUserEmail(email));
 			} else {
@@ -131,7 +129,7 @@ const Login = () => {
 					</button>
 				</form>
 
-				<p className="mt-4 text-center text-sm text-gray-600">
+				<div className="mt-4 text-center text-sm text-gray-600">
 					{isLogin ? "Don't have an account? " : "Already have an account? "}
 					<div
 						className="inline text-blue-500 hover:underline cursor-pointer"
@@ -139,7 +137,7 @@ const Login = () => {
 					>
 						{isLogin ? "Sign up" : "Sign in"}
 					</div>
-				</p>
+				</div>
 			</div>
 		</div>
 	);

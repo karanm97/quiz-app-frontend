@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { questions } from "../constants/questions";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const QuizPage = () => {
-	const [quizQuestions, setQuizQuestions] = useState();
+	const questions = useSelector((store) => store.questions);
 	const [answers, setAnswers] = useState();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		setQuizQuestions(questions);
-	}, []);
-
-	console.log(quizQuestions);
+	console.log(questions);
 
 	const handleOptionClick = (e) => {
 		const questionNo = e.target.dataset["question"];
@@ -25,13 +21,13 @@ const QuizPage = () => {
 		navigate("/quiz/results");
 	};
 
-	if (!quizQuestions) return null;
+	if (!questions) return null;
 
 	return (
 		<div className="max-w-3xl mx-auto p-6 bg-gray-50 rounded-lg shadow-lg mt-10">
 			<h1 className="text-3xl font-semibold text-center mb-8">Quiz</h1>
 
-			{quizQuestions.map((quizQuestion, index) => {
+			{questions.map((quizQuestion, index) => {
 				const { question, optionA, optionB, optionC, optionD } = quizQuestion;
 
 				return (

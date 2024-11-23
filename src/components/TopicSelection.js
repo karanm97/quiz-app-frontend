@@ -1,33 +1,57 @@
-import React, { useState } from "react";
-
-const TAGS = [
-	{ id: 0, value: "Science" },
-	{ id: 1, value: "Maths" },
-	{ id: 2, value: "Philosophy" },
-	{ id: 3, value: "Sports" },
-	{ id: 4, value: "History" },
-	{ id: 5, value: "General Knowledge" },
-	{ id: 6, value: "Pop Culture" },
-];
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addTopicsToState } from "../utils/slices/topicsSlice";
+import { addQuestionsToState } from "../utils/slices/questionsSlice";
+import { useNavigate } from "react-router";
 
 const TopicSelection = ({ startQuiz }) => {
+	const naviate = useNavigate();
+	const { userEmail } = useSelector((store) => store.user);
+	if (!userEmail) {
+		naviate("/");
+	}
+	const [tags, setTags] = useState();
 	const [selectedTags, setSelectedTags] = useState([]);
+	const dispatch = useDispatch();
+
+	const fetchTopics = async () => {
+		const topicsData = await fetch("http://localhost:3000/api/topics/select");
+		const topics = await topicsData.json();
+		setTags(topics);
+	};
+
+	useEffect(() => {
+		fetchTopics();
+	}, []);
 
 	const handleTagClick = (e) => {
-		const tagId = e.target.dataset.id;
-		let tags = [...selectedTags];
-		if (tags.includes(tagId)) {
-			tags = tags.filter((tag) => tag !== tagId);
+		const tagName = e.target.innerText;
+		let newTags = [...selectedTags];
+		if (newTags.includes(tagName)) {
+			newTags = newTags.filter((tag) => tag !== tagName);
 		} else {
-			tags.push(tagId);
+			newTags.push(tagName);
 		}
-		setSelectedTags(tags);
+		setSelectedTags(newTags);
 	};
 
-	const handleStartClick = () => {
-		console.log(selectedTags);
+	const handleStartClick = async () => {
+		dispatch(addTopicsToState(selectedTags));
+		const response = await fetch("http://localhost:3000/api/topics/select", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				selectedTags,
+			}),
+		});
+		const responseJSON = await response.json();
+		dispatch(addQuestionsToState(responseJSON));
 		startQuiz();
 	};
+
+	if (!tags) return null;
 
 	return (
 		<div className="flex flex-col justify-center items-center m-6">
@@ -36,11 +60,11 @@ const TopicSelection = ({ startQuiz }) => {
 					Select Topics
 				</div>
 				<div className="flex flex-wrap justify-evenly gap-3">
-					{TAGS.map((tag) => {
-						const isSelected = selectedTags.includes(tag.id.toString());
+					{tags.map((tag) => {
+						const isSelected = selectedTags.includes(tag.topicName.toString());
 						return (
 							<div
-								key={tag.id}
+								key={tag._id}
 								className={`px-6 py-3 rounded-lg cursor-pointer transition-all duration-300 border-2 shadow-md hover:shadow-lg
                                 ${
 																	isSelected
@@ -49,9 +73,8 @@ const TopicSelection = ({ startQuiz }) => {
 																} 
                             `}
 								onClick={handleTagClick}
-								data-id={tag.id}
 							>
-								{tag.value}
+								{tag.topicName}
 							</div>
 						);
 					})}
