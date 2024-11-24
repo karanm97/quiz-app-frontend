@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import TopicSelection from "./TopicSelection";
 import QuizPage from "./QuizPage";
-import { Outlet } from "react-router";
 
 const QuizMain = () => {
 	const [isQuizPageVisible, setIsQuizPageVisible] = useState(false);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [isQuizPageVisible]);
 
 	const handleQuizStart = () => {
 		setIsQuizPageVisible(true);
@@ -13,10 +16,9 @@ const QuizMain = () => {
 
 	return (
 		<div>
-			<Header />
+			{/* <Header /> */}
 			{!isQuizPageVisible && <TopicSelection startQuiz={handleQuizStart} />}
 			{isQuizPageVisible && <QuizPage />}
-			<Outlet />
 		</div>
 	);
 };

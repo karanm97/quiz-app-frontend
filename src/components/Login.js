@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { loginUser, registerUser } from "./api/authentication";
+import { loginUser, registerUser } from "../api/authentication";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { addUserEmail } from "./utils/slices/userSlice";
+import { addUserEmail } from "../utils/slices/userSlice";
 
 const Login = () => {
 	const [isLogin, setIsLogin] = useState(true);

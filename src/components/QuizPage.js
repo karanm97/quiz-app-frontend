@@ -24,7 +24,7 @@ const QuizPage = () => {
 			}
 		});
 		dispatch(addUserAnswersToQuestion(answers));
-		navigate("/quiz/results");
+		navigate("/results");
 	};
 
 	const answeredCount = answers.filter((answer) => answer !== null).length;

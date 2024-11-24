@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { CircleCheck, XCircle, Trophy, Target } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const QuizAnswers = () => {
 	const questions = useSelector((store) => store.questions);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	let correctCount = 0;
 	questions.forEach((question) => {
 		if (question.userAnswer === question.correctAnswer) {
@@ -138,7 +144,7 @@ const QuizAnswers = () => {
 							</div>
 
 							{/* Explanation (if you have it in your data) */}
-							{!isCorrect && (
+							{/* {!isCorrect && (
 								<div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
 									<p className="text-sm text-blue-800">
 										<strong>Correct Answer:</strong> The right answer was option
@@ -148,20 +154,20 @@ const QuizAnswers = () => {
 											: " You didn't select an answer."}
 									</p>
 								</div>
-							)}
+							)} */}
 						</div>
 					);
 				})}
 
 				{/* Retry Button */}
-				<div className="text-center mt-8">
+				{/* <div className="text-center mt-8">
 					<button
 						onClick={() => window.location.reload()}
 						className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200"
 					>
 						Try Again
 					</button>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

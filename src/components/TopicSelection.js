@@ -6,16 +6,10 @@ import { useNavigate } from "react-router";
 import { Tag, Loader2, BookOpen, Check } from "lucide-react";
 
 const TopicSelection = ({ startQuiz }) => {
-	const navigate = useNavigate();
-	const { userEmail } = useSelector((store) => store.user);
 	const [tags, setTags] = useState();
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useDispatch();
-
-	if (!userEmail) {
-		navigate("/");
-	}
 
 	const fetchTopics = async () => {
 		const topicsData = await fetch("http://localhost:3000/api/topics/select");
