@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserAnswersToQuestion } from "../utils/slices/questionsSlice";
 
 const QuizPage = () => {
 	const questions = useSelector((store) => store.questions);
-	const [answers, setAnswers] = useState();
+	const [answers, setAnswers] = useState(Array(10).fill(null));
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	console.log(questions);
+	console.log(answers);
 
 	const handleOptionClick = (e) => {
-		const questionNo = e.target.dataset["question"];
-		console.log(questionNo);
-		// const selectedOption = e.target.dataset["option"];
-		const selectedOption = e.target.innerText;
-		console.log(selectedOption);
+		const questionIndex = e.target.dataset["question"];
+		// console.log("Question index ", questionIndex);
+		const userSelectedOption = e.target.innerText;
+		// console.log("Selected Answer ", userSelectedOption);
+		let data = [...answers];
+		data[questionIndex] = userSelectedOption;
+		setAnswers(data);
 	};
 
 	const handleSubmit = () => {
+		let correctAnswerCount = 0;
+		answers.map((answer, index) => {
+			if (questions[index].correctAnswer === answer) {
+				correctAnswerCount += 1;
+			}
+		});
+		console.log("Correct Answers - ", correctAnswerCount);
+		dispatch(addUserAnswersToQuestion(answers));
 		navigate("/quiz/results");
 	};
 
@@ -48,16 +61,21 @@ const QuizPage = () => {
 								{ label: "C", option: optionC },
 								{ label: "D", option: optionD },
 							].map(({ label, option }, optionNo) => (
-								<button
-									key={label}
-									className="text-left w-full px-2 py-3 text-lg font-semibold rounded-md focus:outline-none transition-all duration-200 bg-gray-200 hover:bg-gray-300 border-2 border-transparent hover:border-gray-400"
-									data-question={index}
-									data-option={optionNo}
-									onClick={handleOptionClick}
-								>
-									{option}
-									{/* {`${label}. ${option}`} */}
-								</button>
+								<div className="w-full" key={label}>
+									<label className="w-1/12 text-lg font-semibold rounded-md px-2 py-3 bg-gray-100">
+										{label}
+									</label>
+									<button
+										className={`text-left w-11/12 px-2 py-3 text-lg font-semibold rounded-md focus:outline-none bg-gray-200 hover:bg-gray-300 border-2 border-transparent hover:border-gray-400 
+										${answers[index] === option && " bg-blue-400"}
+									`}
+										data-question={index}
+										data-option={optionNo}
+										onClick={handleOptionClick}
+									>
+										{option}
+									</button>
+								</div>
 							))}
 						</div>
 					</div>

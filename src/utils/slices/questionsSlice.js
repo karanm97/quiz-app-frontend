@@ -7,9 +7,16 @@ const questionSlice = createSlice({
 		addQuestionsToState: (state, action) => {
 			return action.payload;
 		},
+		addUserAnswersToQuestion: (state, action) => {
+			const answers = action.payload;
+			answers.map((answer, index) => {
+				state[index]["userAnswer"] = answer;
+			});
+		},
 	},
 });
 
-export const { addQuestionsToState } = questionSlice.actions;
+export const { addQuestionsToState, addUserAnswersToQuestion } =
+	questionSlice.actions;
 
 export default questionSlice.reducer;
