@@ -4,6 +4,7 @@ import { CircleCheck, XCircle, Trophy, Target } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const QuizAnswers = () => {
+	const userEmail = useSelector((store) => store.user.userEmail);
 	const questions = useSelector((store) => store.questions);
 
 	useEffect(() => {
@@ -16,6 +17,23 @@ const QuizAnswers = () => {
 			correctCount += 1;
 		}
 	});
+
+	const postData = async () => {
+		const response = await fetch("http://localhost:3000/api/leaderboard", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: userEmail,
+				score: correctCount,
+			}),
+		});
+
+		const responseJSON = await response.json();
+	};
+
+	postData();
 
 	const scorePercentage = (correctCount / questions.length) * 100;
 

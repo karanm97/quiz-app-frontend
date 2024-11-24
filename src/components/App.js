@@ -1,17 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 import Login from "./Login";
-import Header from "./Header";
-import { Provider, useSelector } from "react-redux";
-import { store } from "../utils/store";
-import TopicSelection from "./TopicSelection";
-import QuizPage from "./QuizPage";
+import { useSelector } from "react-redux";
 import Leaderboard from "./Leaderboard";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import QuizMain from "./QuizMain";
 import QuizAnswers from "./QuizAnswers";
 import Error from "./Error";
 import ProtectedRoute from "./ProtectedRoute";
+import Header from "./Header";
 
 const App = () => {
 	const isAuthenticated = useSelector((store) => store.user.userEmail);
@@ -41,8 +37,16 @@ const App = () => {
 				</ProtectedRoute>
 			),
 		},
+		{
+			path: "/leaderboard",
+			element: <Leaderboard />,
+		},
 	]);
-	return <RouterProvider router={router}></RouterProvider>;
+	return (
+		<RouterProvider router={router}>
+			<Header />
+		</RouterProvider>
+	);
 };
 
 export default App;

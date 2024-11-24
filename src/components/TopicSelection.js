@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addTopicsToState } from "../utils/slices/topicsSlice";
 import { addQuestionsToState } from "../utils/slices/questionsSlice";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Tag, Loader2, BookOpen, Check } from "lucide-react";
 
 const TopicSelection = ({ startQuiz }) => {
@@ -10,6 +10,7 @@ const TopicSelection = ({ startQuiz }) => {
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const fetchTopics = async () => {
 		const topicsData = await fetch("http://localhost:3000/api/topics/select");
@@ -67,6 +68,14 @@ const TopicSelection = ({ startQuiz }) => {
 
 	return (
 		<div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+			<div
+				className="text-3xl font-bold text-gray-900 mb-4 cursor-pointer"
+				onClick={() => {
+					navigate("/leaderboard");
+				}}
+			>
+				Leaderboard
+			</div>
 			<div className="max-w-4xl mx-auto">
 				{/* Header Card */}
 				<div className="bg-white rounded-xl shadow-lg p-8 mb-8">
