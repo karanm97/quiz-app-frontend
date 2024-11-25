@@ -9,6 +9,7 @@ const Header = () => {
 	const userEmail = useSelector((store) => store.user.userEmail);
 
 	const handleLogoutClick = () => {
+		localStorage.removeItem("user_token");
 		dispatch(removeUserEmail());
 	};
 	const toggleMenu = () => {

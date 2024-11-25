@@ -13,7 +13,14 @@ const TopicSelection = ({ startQuiz }) => {
 	const navigate = useNavigate();
 
 	const fetchTopics = async () => {
-		const topicsData = await fetch("http://localhost:3000/api/topics/select");
+		const token = localStorage.getItem("user_token");
+		const topicsData = await fetch("http://localhost:3000/api/topics/select", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		const topics = await topicsData.json();
 		setTags(topics);
 	};
@@ -39,10 +46,12 @@ const TopicSelection = ({ startQuiz }) => {
 		dispatch(addTopicsToState(selectedTags));
 
 		try {
+			const token = localStorage.getItem("user_token");
 			const response = await fetch("http://localhost:3000/api/topics/select", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify({
 					selectedTags,

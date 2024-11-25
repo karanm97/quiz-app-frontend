@@ -27,6 +27,7 @@ const Login = () => {
 			if (responseData.status !== "ok") {
 				setError(responseData.status);
 			} else {
+				localStorage.setItem("user_token", responseData.token);
 				setError("");
 				navigate("/quiz");
 				dispatch(addUserEmail(email));
@@ -40,6 +41,7 @@ const Login = () => {
 		if (isLogin) {
 			const responseData = await loginUser(email, password);
 			if (responseData.status === "ok" && responseData.user) {
+				localStorage.setItem("user_token", responseData.token);
 				navigate("/quiz");
 				dispatch(addUserEmail(email));
 			} else {
