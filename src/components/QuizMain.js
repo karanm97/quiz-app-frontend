@@ -16,7 +16,7 @@ const QuizMain = () => {
 
 	return (
 		<div>
-			{/* <Header /> */}
+			<Header />
 			{!isQuizPageVisible && <TopicSelection startQuiz={handleQuizStart} />}
 			{isQuizPageVisible && <QuizPage />}
 		</div>
