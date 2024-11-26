@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUserEmail } from "../utils/slices/userSlice";
+import { removeUserData } from "../utils/slices/userSlice";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
 
 	const handleLogoutClick = () => {
 		localStorage.removeItem("user_token");
-		dispatch(removeUserEmail());
+		dispatch(removeUserData());
 	};
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);

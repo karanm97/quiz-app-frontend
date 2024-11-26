@@ -3,7 +3,7 @@ import Header from "./Header";
 import { loginUser, registerUser } from "../api/authentication";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { addUserEmail } from "../utils/slices/userSlice";
+import { addUserData } from "../utils/slices/userSlice";
 
 const Login = () => {
 	const [isLogin, setIsLogin] = useState(true);
@@ -27,10 +27,14 @@ const Login = () => {
 			if (responseData.status !== "ok") {
 				setError(responseData.status);
 			} else {
-				localStorage.setItem("user_token", responseData.token);
+				dispatch(
+					addUserData({
+						email,
+						token: responseData.token,
+					})
+				);
 				setError("");
 				navigate("/quiz");
-				dispatch(addUserEmail(email));
 			}
 		}
 		if (!isLogin && password !== repeatPassword) {
@@ -41,9 +45,13 @@ const Login = () => {
 		if (isLogin) {
 			const responseData = await loginUser(email, password);
 			if (responseData.status === "ok" && responseData.user) {
-				localStorage.setItem("user_token", responseData.token);
+				dispatch(
+					addUserData({
+						email,
+						token: responseData.token,
+					})
+				);
 				navigate("/quiz");
-				dispatch(addUserEmail(email));
 			} else {
 				setError("Email ID not found.");
 			}

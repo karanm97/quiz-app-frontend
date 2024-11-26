@@ -2,16 +2,16 @@ import React from "react";
 import Login from "./Login";
 import { useSelector } from "react-redux";
 import Leaderboard from "./Leaderboard";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import QuizMain from "./QuizMain";
 import QuizAnswers from "./QuizAnswers";
 import Error from "./Error";
 import ProtectedRoute from "./ProtectedRoute";
-import Header from "./Header";
 import Profile from "./Profile";
 
 const App = () => {
-	const isAuthenticated = useSelector((store) => store.user.userEmail);
+	const userData = useSelector((store) => store.user);
+	const { userEmail, userToken } = userData;
 
 	const router = createBrowserRouter([
 		{
@@ -22,7 +22,11 @@ const App = () => {
 		{
 			path: "/quiz",
 			element: (
-				<ProtectedRoute isAuthenticated={isAuthenticated} redirectRoute={"/"}>
+				<ProtectedRoute
+					userEmail={userEmail}
+					userToken={userToken}
+					redirectRoute={"/"}
+				>
 					<QuizMain />
 				</ProtectedRoute>
 			),
@@ -31,7 +35,8 @@ const App = () => {
 			path: "/results",
 			element: (
 				<ProtectedRoute
-					isAuthenticated={isAuthenticated}
+					userEmail={userEmail}
+					userToken={userToken}
 					redirectRoute={"/quiz"}
 				>
 					<QuizAnswers />
@@ -45,7 +50,11 @@ const App = () => {
 		{
 			path: "/profile",
 			element: (
-				<ProtectedRoute isAuthenticated={isAuthenticated} redirectRoute={"/"}>
+				<ProtectedRoute
+					userEmail={userEmail}
+					userToken={userToken}
+					redirectRoute={"/"}
+				>
 					<Profile />
 				</ProtectedRoute>
 			),

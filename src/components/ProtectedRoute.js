@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate } from "react-router";
 
-const ProtectedRoute = ({ isAuthenticated, redirectRoute, children }) => {
-	if (!isAuthenticated) {
+const ProtectedRoute = ({ userEmail, userToken, redirectRoute, children }) => {
+	if (!(userEmail || userToken)) {
 		return <Navigate to={redirectRoute} />;
 	}
 	return children;

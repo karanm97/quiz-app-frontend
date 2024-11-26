@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTopicsToState } from "../utils/slices/topicsSlice";
 import { addQuestionsToState } from "../utils/slices/questionsSlice";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Tag, Loader2, BookOpen, Check } from "lucide-react";
 
 const TopicSelection = ({ startQuiz }) => {
