@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { CircleCheck, XCircle, Trophy, Target } from "lucide-react";
-import { useNavigate } from "react-router";
 import Header from "./Header";
 
 const QuizAnswers = () => {
@@ -20,10 +19,12 @@ const QuizAnswers = () => {
 	});
 
 	const postData = async () => {
+		const token = localStorage.getItem("user_token");
 		const response = await fetch("http://localhost:3000/api/leaderboard", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				email: userEmail,
