@@ -10,9 +10,6 @@ import ProtectedRoute from "./ProtectedRoute";
 import Profile from "./Profile";
 
 const App = () => {
-	const userData = useSelector((store) => store.user);
-	const { userEmail, userToken } = userData;
-
 	const router = createBrowserRouter([
 		{
 			path: "/",
@@ -22,11 +19,7 @@ const App = () => {
 		{
 			path: "/quiz",
 			element: (
-				<ProtectedRoute
-					userEmail={userEmail}
-					userToken={userToken}
-					redirectRoute={"/"}
-				>
+				<ProtectedRoute redirectRoute={"/"}>
 					<QuizMain />
 				</ProtectedRoute>
 			),
@@ -34,11 +27,7 @@ const App = () => {
 		{
 			path: "/results",
 			element: (
-				<ProtectedRoute
-					userEmail={userEmail}
-					userToken={userToken}
-					redirectRoute={"/quiz"}
-				>
+				<ProtectedRoute redirectRoute={"/quiz"}>
 					<QuizAnswers />
 				</ProtectedRoute>
 			),
@@ -50,11 +39,7 @@ const App = () => {
 		{
 			path: "/profile",
 			element: (
-				<ProtectedRoute
-					userEmail={userEmail}
-					userToken={userToken}
-					redirectRoute={"/"}
-				>
+				<ProtectedRoute redirectRoute={"/"}>
 					<Profile />
 				</ProtectedRoute>
 			),

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserData } from "../utils/slices/userSlice";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const userEmail = useSelector((store) => store.user.userEmail);
 
 	const handleLogoutClick = () => {
 		localStorage.removeItem("user_token");
 		dispatch(removeUserData());
+		navigate("/");
 	};
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import { loginUser, registerUser } from "../api/authentication";
 import { useNavigate } from "react-router";
@@ -13,39 +13,6 @@ const Login = () => {
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
-	const verifyToken = async (token) => {
-		const response = await fetch("http://localhost:3000/api/verify-token", {
-			method: "GET",
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-
-		const data = await response.json();
-		console.log(data);
-
-		if (data.valid) {
-			console.log("data is valid");
-
-			dispatch(
-				addUserData({
-					email: data.user.email,
-					token: data.user.token,
-				})
-			);
-			navigate("/quiz");
-		} else {
-			localStorage.removeItem("user_token");
-		}
-	};
-
-	useEffect(() => {
-		const token = localStorage.getItem("user_token");
-		if (token) {
-			verifyToken(token);
-		}
-	}, []);
 
 	const handleSignUpClick = () => {
 		setIsLogin((isLogin) => !isLogin);
