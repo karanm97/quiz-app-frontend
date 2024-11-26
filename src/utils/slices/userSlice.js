@@ -4,7 +4,9 @@ export const userSlice = createSlice({
 	name: "user",
 	initialState: {
 		userEmail: null,
-		userToken: localStorage.getItem("user_token") || null,
+		userToken: localStorage.getItem("user_token"),
+		// userToken: localStorage.getItem("user_token") || null,
+
 	},
 	reducers: {
 		addUserData: (state, action) => {
