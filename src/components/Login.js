@@ -23,6 +23,10 @@ const Login = () => {
 
 		// User Registration
 		if (!isLogin && password === repeatPassword) {
+			if (password.length < 8 || repeatPassword.length < 8) {
+				setError("Password should be of atleast 8 characters.");
+				return;
+			}
 			const responseData = await registerUser(email, password);
 			if (responseData.status !== "ok") {
 				setError(responseData.status);
