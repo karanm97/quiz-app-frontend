@@ -1,6 +1,8 @@
+
 // register user
 export const registerUser = async (email, password) => {
-	const response = await fetch("http://localhost:3000/api/users/register", {
+	const apiUrl = process.env.NODE_API_URL;
+	const response = await fetch(`${apiUrl}/api/users/register`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -16,7 +18,9 @@ export const registerUser = async (email, password) => {
 };
 
 export const loginUser = async (email, password) => {
-	const response = await fetch("http://localhost:3000/api/users/login", {
+	const apiUrl = process.env.NODE_API_URL;
+	const response = await fetch(`${apiUrl}/api/users/login`, {
+
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

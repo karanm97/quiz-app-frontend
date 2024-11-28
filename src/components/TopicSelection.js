@@ -5,6 +5,8 @@ import { addQuestionsToState } from "../utils/slices/questionsSlice";
 import { useNavigate } from "react-router";
 import { Tag, Loader2, BookOpen, Check } from "lucide-react";
 
+const apiUrl = process.env.NODE_API_URL;
+
 const TopicSelection = ({ startQuiz }) => {
 	const [tags, setTags] = useState();
 	const [selectedTags, setSelectedTags] = useState([]);
@@ -14,7 +16,7 @@ const TopicSelection = ({ startQuiz }) => {
 
 	const fetchTopics = async () => {
 		const token = localStorage.getItem("user_token");
-		const topicsData = await fetch("http://localhost:3000/api/topics/select", {
+		const topicsData = await fetch(`${apiUrl}/api/topics/select`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -47,7 +49,7 @@ const TopicSelection = ({ startQuiz }) => {
 
 		try {
 			const token = localStorage.getItem("user_token");
-			const response = await fetch("http://localhost:3000/api/topics/select", {
+			const response = await fetch(`${apiUrl}/api/topics/select`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

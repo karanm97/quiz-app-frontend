@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import { addUserData } from "../utils/slices/userSlice";
 
+const apiUrl = process.env.NODE_API_URL;
+
 const Leaderboard = () => {
 	const [leaderboardData, setLeaderboardData] = useState();
 	const [errors, setErrors] = useState();
@@ -20,7 +22,7 @@ const Leaderboard = () => {
 	};
 
 	const fetchLeaderboardDataWithoutToken = async () => {
-		const response = await fetch("http://localhost:3000/api/leaderboard");
+		const response = await fetch(`${apiUrl}/api/leaderboard`);
 		const responseJSON = await response.json();
 
 		if (responseJSON.error) {
@@ -33,16 +35,13 @@ const Leaderboard = () => {
 	const fetchLeaderboardDataWithToken = async () => {
 		const token = localStorage.getItem("user_token");
 
-		const response = await fetch(
-			"http://localhost:3000/api/leaderboard-token",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
+		const response = await fetch(`${apiUrl}/api/leaderboard-token`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		const responseJSON = await response.json();
 
 		if (responseJSON.error) {

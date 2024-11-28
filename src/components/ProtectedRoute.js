@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router";
 import { addUserData } from "../utils/slices/userSlice";
 
+const apiUrl = process.env.NODE_API_URL;
+
 const ProtectedRoute = ({ redirectRoute, children }) => {
 	const [validity, setValidity] = useState(null);
 	const dispatch = useDispatch();
 
 	const verifyToken = async (token) => {
-		const response = await fetch("http://localhost:3000/api/verify-token", {
+		const response = await fetch(`${apiUrl}/api/verify-token`, {
 			method: "GET",
 			headers: {
 				Authorization: `Bearer ${token}`,

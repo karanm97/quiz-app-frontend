@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { CircleCheck, XCircle, Trophy, Target } from "lucide-react";
 import Header from "./Header";
 
+const apiUrl = process.env.NODE_API_URL;
+
 const QuizAnswers = () => {
 	const userEmail = useSelector((store) => store.user.userEmail);
 	const questions = useSelector((store) => store.questions);
@@ -20,7 +22,7 @@ const QuizAnswers = () => {
 
 	const postData = async () => {
 		const token = localStorage.getItem("user_token");
-		const response = await fetch("http://localhost:3000/api/leaderboard", {
+		const response = await fetch(`${apiUrl}/api/leaderboard`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
